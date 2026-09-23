@@ -68,6 +68,11 @@ published. Raw audio and identified transcripts are not publicly available to pr
 student privacy. SP case labels (SP01–SP06) are retained because the case checklists
 are described in the manuscript's prompts appendix.
 
+## Citation and archive
+
+Archived on Zenodo: **https://doi.org/10.5281/zenodo.22927342** (DOI 10.5281/zenodo.22927342).
+GitHub repository: https://github.com/yepsun/sp-history-llm-second-rater
+
 ## License
 
 CC-BY-4.0 (see LICENSE). Cite the manuscript (above) when reusing these data.
