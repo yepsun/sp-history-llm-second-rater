@@ -10,6 +10,8 @@ standardized patient history-taking examinations: a retrospective adjudication s
 | --- | --- |
 | `item_level_scores_anonymized.csv` | De-identified item-level scores, 8,405 rows (one row per checklist item) |
 | `run_analysis.py` | Reproduces the headline analyses (agreement, expert consensus accuracy, grade-band reclassification) from the CSV |
+| `sensitivity_bootstrap.py` | Two-way cluster bootstrap (student × examiner) and per-case estimates for the accuracy and MAE differences (reviewer comment R5) |
+| `sensitivity_glmm.R` | Crossed random-effects models (logistic for agreement, Gaussian for absolute error; R/lme4) |
 | `README.md` | This file |
 
 ## Study and data summary
@@ -36,6 +38,7 @@ Ethics approval: Peking Union Medical College Hospital Ethics Committee
 | `encounter_id` | Anonymous encounter identifier (E001–E240); random assignment (seed 20251110) |
 | `student_id` | Anonymous student identifier (S001–S092); assigned in order of first appearance. 56 students contribute 3 encounters and 36 contribute 2 (one encounter each reserved for prompt development) |
 | `sp_case` | SP case (SP01–SP06); not identifying |
+| `examiner_id` | Anonymous on-site examiner identifier (E01–E12), derived from the examination-room numbers used as examiner identifiers in the manuscript; 12 examiners, each examining one morning and/or one afternoon case |
 | `item_seq` | Checklist item number within the case |
 | `item_max` | Maximum score for the item (1–4) |
 | `examiner_score` | Score assigned by the on-site examiner during the encounter |
@@ -50,6 +53,8 @@ Ethics approval: Peking Union Medical College Hospital Ethics Committee
 ```bash
 python3 run_analysis.py   # requires pandas, numpy
 ```
+
+v2 (2026-09-24) adds the anonymized examiner identifier (E01–E12) and the two cross-classified sensitivity analysis scripts above.
 
 Reproduced headline values: examiner–LLM exact agreement 89.5% (7,523/8,405); 882
 discordant items, of which 818 have an expert majority consensus and 64 are unresolved;
