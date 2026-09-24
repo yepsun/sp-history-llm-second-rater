@@ -75,7 +75,7 @@ are described in the manuscript's prompts appendix.
 
 ## Citation and archive
 
-Archived on Zenodo: **https://doi.org/10.5281/zenodo.22927342** (DOI 10.5281/zenodo.22927342).
+Archived on Zenodo: **https://doi.org/10.5281/zenodo.22927341** (DOI 10.5281/zenodo.22927341).
 GitHub repository: https://github.com/yepsun/sp-history-llm-second-rater
 
 Authors: Jun Feng¹*, Shaoting Wang²*, Xiaoxing Gao²*, Luo Wang², Xiaoming Huang³,
