@@ -73,6 +73,13 @@ are described in the manuscript's prompts appendix.
 Archived on Zenodo: **https://doi.org/10.5281/zenodo.22927342** (DOI 10.5281/zenodo.22927342).
 GitHub repository: https://github.com/yepsun/sp-history-llm-second-rater
 
+Authors: Jun Feng¹*, Shaoting Wang²*, Xiaoxing Gao²*, Luo Wang², Xiaoming Huang³,
+Xuefeng Sun²,⁴ (*equal contribution). ¹Department of Hematology; ²Department of Respiratory
+and Critical Care Medicine; ³Department of General Medicine, Department of Medical
+Diagnostics; ⁴Department of Internal Medicine — Peking Union Medical College Hospital,
+Chinese Academy of Medical Sciences and Peking Union Medical College, Beijing, China.
+Corresponding author: Xuefeng Sun, sunxfer@sina.com, ORCID 0000-0002-5355-3405.
+
 ## License
 
 CC-BY-4.0 (see LICENSE). Cite the manuscript (above) when reusing these data.
