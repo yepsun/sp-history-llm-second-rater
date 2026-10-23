@@ -1,6 +1,6 @@
 # Item-level scoring data: LLM as a second rater for SP history-taking examinations
 
-Dataset for: *Transcript-based large language model scoring as a low-cost second rater for
+Dataset for: *Transcript-based large language model scoring as a second rater for
 standardized patient history-taking examinations: a retrospective adjudication study*
 (JMIR Medical Education, under review; manuscript ID 110683).
 
@@ -12,6 +12,12 @@ standardized patient history-taking examinations: a retrospective adjudication s
 | `run_analysis.py` | Reproduces the headline analyses (agreement, expert consensus accuracy, grade-band reclassification) from the CSV |
 | `sensitivity_bootstrap.py` | Two-way cluster bootstrap (student × examiner) and per-case estimates for the accuracy and MAE differences (reviewer comment R5) |
 | `sensitivity_glmm.R` | Crossed random-effects models (logistic for agreement, Gaussian for absolute error; R/lme4) |
+| `october_rescore_analysis_set.csv` | Item-level scores of two same-day re-scoring passes on 23 October 2026 (236 of 240 analysis-set encounters traceable to this dataset; 8,271 rows), used for the run-to-run stability and July-to-October change analyses (reviewer P4, round 2) |
+| `development_set_scores.csv` | Complete item-level scores for the 36-encounter prompt-development set (35 encounters expert-scored; 1,257 rows): examiner, LLM (9 July snapshot), and three expert scores, anonymized (D01–D36) (reviewer P6, round 2) |
+| `whole_exam_accuracy.py` | Whole-examination item-level agreement estimates under both conventions for the 64 unresolved items (reviewer P1, round 2) |
+| `rescore_20261023.py` | Byte-faithful replica of the original scoring pipeline used for the October 2026 two-pass re-scoring |
+| `reproduce_p4_from_public_data.py` | Reproduces every stability number reported in the manuscript (8,271 items / 236 encounters; 874 July-discordant; flips 197–208 out / 143–157 in; 77% stable; 813 reference items; 65.9% / 65.2% / 66.4%; McNemar p = 0.72 / 0.83) from the two public CSVs alone |
+| `analyze_rerun_20261023.py` | Internal stability analysis over the authors’ archived working files, provided for transparency only; it uses local paths and differs from the released CSV on 3 items (885 vs 882 July-discordant), so the manuscript reports the public-data values computed by the script above |
 | `README.md` | This file |
 
 ## Study and data summary
@@ -25,11 +31,12 @@ distribution); the remaining 240 encounters form the analysis set. Every checkli
 item was scored by the on-site examiner and independently by an LLM
 (DeepSeek-V4-Pro) from the verified transcript; the 882 discordant items (10.5%)
 were re-scored by three blinded faculty experts, and two further models
-(DeepSeek-V4-Flash-0731; Qwen3-Next-80B-A3B-Instruct) replicated the LLM scoring.
+(DeepSeek-V4-Flash-0731; Qwen3-Next-80B-A3B-Instruct) scored the same transcripts for secondary
+comparison.
 
 Ethics approval: Peking Union Medical College Hospital Ethics Committee
 (Approval No. I-26PJ0511); the requirement for individual informed consent was waived
-(retrospective use of pre-existing anonymized educational data).
+(retrospective use of pre-existing de-identified educational data).
 
 ## Data dictionary (`item_level_scores_anonymized.csv`)
 
@@ -55,6 +62,10 @@ python3 run_analysis.py   # requires pandas, numpy
 ```
 
 v2 (2026-09-24) adds the anonymized examiner identifier (E01–E12) and the two cross-classified sensitivity analysis scripts above.
+
+v3 (2026-10-23) adds the October 2026 two-pass re-scoring data and stability scripts, the
+development-set expert scores, and the whole-examination accuracy script (second-round
+revision).
 
 Reproduced headline values: examiner–LLM exact agreement 89.5% (7,523/8,405); 882
 discordant items, of which 818 have an expert majority consensus and 64 are unresolved;
