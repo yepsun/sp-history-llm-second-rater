@@ -20,7 +20,7 @@ from datetime import datetime, timezone
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from openpyxl import load_workbook, Workbook
 
-BASE_DIR = Path("/Users/Yepsun/Mywork/Vscodeprojects/programs/STT/output")
+BASE_DIR = Path(os.environ.get("STT_OUTPUT_DIR", "../output"))  # dir containing students_records/, human_scores/, AI_scores/
 RECORDS_DIR = BASE_DIR / "students_records"
 HUMAN_DIR = BASE_DIR / "human_scores"
 OUT_ROOT = BASE_DIR / "rerun_20261023"
@@ -258,7 +258,7 @@ def append_meta(run, records):
 
 def cmd_test():
     encs = list_encounters()
-    enc = next(e for e in encs if e[0] == "丁愚昔" and e[1] == "SP04")
+    enc = encs[0]  # first encounter in sorted order
     print(f"TEST: {enc[0]} {enc[1]} ({enc[2]})")
     status, name, info = score_one(enc, OUT_ROOT / "test")
     print("status:", status, "| info:", json.dumps(info, ensure_ascii=False)[:400])

@@ -11,8 +11,8 @@ from pathlib import Path
 import pandas as pd
 import openpyxl
 
-OUT = Path("/Users/Yepsun/Mywork/Vscodeprojects/programs/STT/output")
-CSV = Path("/Users/Yepsun/Mywork/Vscodeprojects/programs/STT/jmir_med_edu/revision1/data_release/item_level_scores_anonymized.csv")
+OUT = Path(os.environ.get("STT_OUTPUT_DIR", "../output"))
+CSV = Path(os.environ.get("ITEM_CSV", "item_level_scores_anonymized.csv"))
 
 def load_xlsx_items(path):
     ws = openpyxl.load_workbook(path).active
