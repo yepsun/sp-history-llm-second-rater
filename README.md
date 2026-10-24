@@ -67,6 +67,12 @@ v3 (2026-10-23) adds the October 2026 two-pass re-scoring data and stability scr
 development-set expert scores, and the whole-examination accuracy script (second-round
 revision).
 
+v4 (2026-10-24) fixes a column-labelling error in `development_set_scores.csv` (the
+`sp_case` column previously held the source file extension instead of the case code; it
+now reads SP01–SP06; scores and all other columns are unchanged) and rewrites
+`whole_exam_accuracy.py` to compute every count live from the CSV instead of relying on
+hard-coded numbers.
+
 Reproduced headline values: examiner–LLM exact agreement 89.5% (7,523/8,405); 882
 discordant items, of which 818 have an expert majority consensus and 64 are unresolved;
 against the majority consensus the LLM matches on 65.5% of items (MAE 0.37) versus
