@@ -12,12 +12,13 @@ standardized patient history-taking examinations: a retrospective adjudication s
 | `run_analysis.py` | Reproduces the headline analyses (agreement, expert consensus accuracy, grade-band reclassification) from the CSV |
 | `sensitivity_bootstrap.py` | Two-way cluster bootstrap (student × examiner) and per-case estimates for the accuracy and MAE differences (reviewer comment R5) |
 | `sensitivity_glmm.R` | Crossed random-effects models (logistic for agreement, Gaussian for absolute error; R/lme4) |
-| `october_rescore_analysis_set.csv` | Item-level scores of two same-day re-scoring passes on 23 October 2026 (236 of 240 analysis-set encounters traceable to this dataset; 8,271 rows), used for the run-to-run stability and July-to-October change analyses (reviewer P4, round 2) |
+| `october_rescore_analysis_set.csv` | Item-level scores of two same-day re-scoring passes on 23 October 2026 (all 240 analysis-set encounters; 8,405 rows), used for the run-to-run stability and July-to-October change analyses (reviewer P4, round 2; completed to all 240 encounters in v5, see version history) |
 | `development_set_scores.csv` | Complete item-level scores for the 36-encounter prompt-development set (35 encounters expert-scored; 1,257 rows): examiner, LLM (9 July snapshot), and three expert scores, anonymized (D01–D36) (reviewer P6, round 2) |
 | `whole_exam_accuracy.py` | Whole-examination item-level agreement estimates under both conventions for the 64 unresolved items (reviewer P1, round 2) |
 | `rescore_20261023.py` | Byte-faithful replica of the original scoring pipeline used for the October 2026 two-pass re-scoring |
-| `reproduce_p4_from_public_data.py` | Reproduces every stability number reported in the manuscript (8,271 items / 236 encounters; 874 July-discordant; flips 197–208 out / 143–157 in; 77% stable; 813 reference items; 65.9% / 65.2% / 66.4%; McNemar p = 0.72 / 0.83) from the two public CSVs alone |
-| `analyze_rerun_20261023.py` | Internal stability analysis over the authors’ archived working files, provided for transparency only; it uses local paths and differs from the released CSV on 3 items (885 vs 882 July-discordant), so the manuscript reports the public-data values computed by the script above |
+| `reproduce_p4_from_public_data.py` | Reproduces every stability number reported in the manuscript (8,405 items / 240 encounters; 882 July-discordant; flips 199–212 out / 144–159 in; 76–77% stable; 65.5% / 64.8% / 66.0% on the 818 reference items; McNemar p = 0.72 / 0.83; three-run majority vote 66.4%) from the two public CSVs alone |
+| `reproduce_round3_numbers.py` | Reproduces the statistics added in the round-3 revision: whole-examination difference bootstrap CI, development-set conditional match rates, grade-band McNemar test, half-point score counts, single-expert Wilcoxon p-values, and expert-disagreement counts among model-consensus errors |
+| `analyze_rerun_20261023.py` | Internal stability analysis over the authors’ archived working files, provided for transparency only; it uses local paths and links the October files to this dataset by score-sequence matching, so it predates the v5 resolution of the last four encounters |
 | `README.md` | This file |
 
 ## Study and data summary
@@ -72,6 +73,21 @@ v4 (2026-10-24) fixes a column-labelling error in `development_set_scores.csv` (
 now reads SP01–SP06; scores and all other columns are unchanged) and rewrites
 `whole_exam_accuracy.py` to compute every count live from the CSV instead of relying on
 hard-coded numbers.
+
+v5 (2026-10-31) completes `october_rescore_analysis_set.csv` to all 240 analysis-set
+encounters (8,405 rows). The original v3 file linked the October re-scoring to this
+dataset by matching examiner-plus-model score sequences, which left four encounters
+(two pairs of encounters with identical sequences) unassignable and therefore absent.
+All four have now been resolved and added, using three concordant internal signals:
+the examination-room rosters (which assign each encounter to an examiner, and the two
+members of one pair had different examiners), the full secondary-model score sequences,
+and the expert adjudication records. Every previously reported stability figure is
+unchanged or unchanged to the reported precision (same-day October agreement 97.4%;
+July-to-October agreement 95.5% and 95.1%; 76–77% of the July-discordant set stable;
+accuracy against the 818 reference items 65.5% July versus 64.8% and 66.0% in October;
+McNemar p = 0.72 and 0.83). v5 also adds `reproduce_round3_numbers.py` (round-3
+reviewer statistics) and updates `reproduce_p4_from_public_data.py` to the
+complete-linkage figures and the strict 818-item reference definition.
 
 Reproduced headline values: examiner–LLM exact agreement 89.5% (7,523/8,405); 882
 discordant items, of which 818 have an expert majority consensus and 64 are unresolved;
