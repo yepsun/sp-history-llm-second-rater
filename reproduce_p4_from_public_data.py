@@ -11,6 +11,12 @@ July model score sequences) unassignable. The v5 release resolves all four with
 three concordant internal signals (examination-room rosters, full secondary-model
 score sequences, and expert adjudication records) and adds their October scores;
 no student-identifying information is included in this repository.
+
+v6 (2026-10-31, same day) fixes a NaN-comparison slip in the majority-vote section of
+reproduce_p4_from_public_data.py: the 11 items with no three-run majority were being
+counted as discordant. Corrected figures: 807/8,394 defined-vote discordances (9.6%),
+818 items routed (versus 882 July, 827-829 October). Accuracy figures (66.4% on the 818
+reference items) were unaffected.
 """
 import pandas as pd
 import collections
@@ -68,8 +74,18 @@ def mvote(r):
 m['mv'] = m.apply(mvote, axis=1)
 print(f"\n3-run majority vote defined on {int(m.mv.notna().sum())}/{len(m)} items "
       f"({m.mv.notna().mean()*100:.1f}%)")
-for col, lab in [('deepseek_v4_pro', 'July'), ('oct_run_a', 'OctA'),
-                 ('oct_run_b', 'OctB'), ('mv', '3-run majority')]:
+for col, lab in [('deepseek_v4_pro', 'July'), ('oct_run_a', 'OctA'), ('oct_run_b', 'OctB')]:
     print(f"  discordance with examiner ({lab}): {(m.examiner_score != m[col]).mean()*100:.2f}%")
+# for the majority vote, discordance is only defined where a vote exists; comparing
+# against NaN would silently count the 11 no-majority items as discordant
+defined = m.mv.notna()
+mv_disc = int((m.loc[defined, 'examiner_score'] != m.loc[defined, 'mv']).sum())
+undefined = int((~defined).sum())
+print(f"  discordance with examiner (3-run majority, defined votes only): "
+      f"{mv_disc}/{int(defined.sum())} = {mv_disc / defined.sum() * 100:.2f}%")
+print(f"  items routed to expert review (discordant or no majority): "
+      f"{mv_disc + undefined} ({mv_disc} discordant + {undefined} with no run majority), "
+      f"versus 882 July / 827 OctA / 829 OctB")
 ok = ref.assign(mv=m.loc[ref.index, 'mv'])['mv'] == ref.consensus
-print(f"  accuracy vs 818 reference (3-run majority): {ok.sum()}/{len(ref)} = {ok.mean()*100:.1f}%")
+print(f"  accuracy vs 818 reference (3-run majority, undefined votes count as non-matches): "
+      f"{ok.sum()}/{len(ref)} = {ok.mean()*100:.1f}%")

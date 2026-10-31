@@ -89,6 +89,13 @@ McNemar p = 0.72 and 0.83). v5 also adds `reproduce_round3_numbers.py` (round-3
 reviewer statistics) and updates `reproduce_p4_from_public_data.py` to the
 complete-linkage figures and the strict 818-item reference definition.
 
+v6 (31 October 2026, later the same day) fixes a NaN-comparison slip in the
+majority-vote section of `reproduce_p4_from_public_data.py`: the 11 items with no
+three-run majority had been counted as discordant. Corrected figures: 807 of 8,394
+defined-vote discordances (9.6%), 818 items routed to expert review (versus 882 in
+July and 827–829 in October). The accuracy figures (66.4% on the 818 reference items)
+were unaffected.
+
 Reproduced headline values: examiner–LLM exact agreement 89.5% (7,523/8,405); 882
 discordant items, of which 818 have an expert majority consensus and 64 are unresolved;
 against the majority consensus the LLM matches on 65.5% of items (MAE 0.37) versus
